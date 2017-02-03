@@ -12,15 +12,16 @@ var guesses = 0;
 var guessesLeft = 10;
 var guessesTyped =[];
 
+console.log("Correct letter: " + letter);
 
 document.onkeyup = function(event) {
 
 	var guess = String.fromCharCode(event.keyCode).toLowerCase();
-	console.log(guess);
+	console.log("your guess: " + guess);
 
-	if (guess === letter) {
+	if (guess === window.letter) {
 		wins++;
-		alert("You guess right! " + guessingLetter + " was the correct letter!");
+		alert("You guess right! " + window.letter + " was the correct letter!");
 		$("#wins").html("Wins: " + wins);
 
 		guesses = 0;
@@ -30,22 +31,13 @@ document.onkeyup = function(event) {
 		$("#guessesLeft").html("Guesses Left: " + guessesLeft);
 		$("#guessesSoFar").html("Guesses So Far: " + guessesTyped);
 
-		alert("You lost :( the correct letter was: " + letter);
+		var random = Math.floor(Math.random() * 25);
 
-		var random = Math.floor(Math.random() * 26);
-
-		var letter = alphabet[random];
+		window.letter = alphabet[random];
+		console.log("new letter: " + window.letter);
 
 	}
-	else {
-		guesses++;
-		guessesLeft--;
-		guessesTyped.push(guess);
-		$("#guessesLeft").html("Guesses Left: " + guessesLeft);
-		$("#guessesSoFar").html("Guesses So Far: " + guessesTyped);
-	}
-
-	if (guessesLeft === 0) {
+	else if (guessesLeft === 0) {
 		losses++;
 		guesses = 0;
 		guessesLeft = 10;
@@ -54,13 +46,19 @@ document.onkeyup = function(event) {
 		$("#guessesLeft").html("Guesses Left: " + guessesLeft);
 		$("#guessesSoFar").html("Guesses So Far: " + guessesTyped);
 
-		alert("You lost :( the correct letter was: " + letter);
+		alert("You lost :( the correct letter was: " + window.letter);
 
 		var random = Math.floor(Math.random() * 25);
 
-		letter = alphabet[random];
+		window.letter = alphabet[random];
 
-		console.log(letter);
+		console.log("new letter: " + window.letter);
 	}
-
+	else {
+		guesses++;
+		guessesLeft--;
+		guessesTyped.push(guess);
+		$("#guessesLeft").html("Guesses Left: " + guessesLeft);
+		$("#guessesSoFar").html("Guesses So Far: " + guessesTyped);
+	}
 };
